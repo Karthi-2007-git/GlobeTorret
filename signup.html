@@ -1,0 +1,111 @@
+<!--This project is created by Odoo-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="https://icons.veryicon.com/png/o/internet--web/billion-square-cloud/o-1.png" type="image/x-icon">
+    <title>Sign Up</title>
+    <!-- Importing a nice font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="message-box" id="messageBox"></div>
+
+    <!-- =========================================
+         CODE BLOCK 2: SIGNUP CARD
+         ========================================= -->
+    <div id="signup-card" class="auth-card">
+        
+        <!-- Header Section (Grouped for Desktop Layout) -->
+        <div class="header-section">
+            <div class="profile-icon">
+                <svg viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <h2 class="title">Create Account</h2>
+        </div>
+
+        <form id="signupForm" style="display: contents;"> <!-- Display contents allows children to participate in parent grid -->
+            
+            <!-- LEFT COLUMN (Inputs) -->
+            <div class="signup-left-col">
+                <div class="form-row-wrapper">
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>First Name</label>
+                            <input type="text" placeholder="First Name" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Last Name</label>
+                            <input type="text" placeholder="Last Name" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row-wrapper">
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Email</label>
+                            <input type="email" placeholder="Email Address" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Phone</label>
+                            <input type="tel" placeholder="Phone Number">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row-wrapper">
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>City</label>
+                            <input type="text" placeholder="City">
+                        </div>
+                        <div class="input-group">
+                            <label>Country</label>
+                            <input type="text" placeholder="Country">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN (Big Textarea & Button) -->
+            <div class="signup-right-col">
+                <div class="input-group" style="display: flex; flex-direction: column; flex-grow: 1;">
+                    <label>Additional Info</label>
+                    <textarea placeholder="Tell us about yourself..." style="height: 100%;"></textarea>
+                </div>
+                
+                <button type="submit" class="btn-primary">Register</button>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="links">
+                <span style="color: #6B6158;">Already have an account?</span>
+                <a href="login.html" target="_blank"><b>Back to Login</b></a>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        // --- FORM HANDLERS ---
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showMessage("Account created successfully!");
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 1500);
+        });
+
+        function showMessage(msg) {
+            const box = document.getElementById('messageBox');
+            box.innerText = msg;
+            box.style.display = 'block';
+            setTimeout(() => box.style.display = 'none', 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+/* =========================================
+           RESET & GLOBAL STYLES
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #F0EEE6;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Helper to hide/show cards */
+        .hidden {
+            display: none !important;
+        }
+
+        /* =========================================
+           SHARED CARD STYLES
+           ========================================= */
+        .auth-card {
+            background-color: #E3DACC;
+            width: 100%;
+            padding: 40px;
+            border: 2px solid #8C8279;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            position: relative;
+            animation: fadeIn 0.4s ease-out;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Profile Icon Shared */
+        .profile-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #F0EEE6;
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+
+        .profile-icon svg {
+            width: 40px;
+            height: 40px;
+            color: #6B6158;
+            fill: currentColor;
+        }
+
+        .title {
+            color: #4A443E;
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        /* Form Inputs Shared */
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #6B6158;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            background-color: #F0EEE6;
+            font-size: 1rem;
+            color: #333;
+            transition: all 0.3s ease;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .input-group input:focus, .input-group textarea:focus {
+            border-color: #8C8279;
+            background-color: #fff;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background-color: #4A443E;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            margin-top: 10px;
+            min-height: 48px;
+            flex-shrink: 0;
+        }
+
+        .btn-primary:hover {
+            background-color: #36322E;
+            transform: translateY(-2px);
+        }
+
+        .links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            font-size: 0.85rem;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .links a {
+            color: #6B6158;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .links a:hover {
+            color: #333;
+            text-decoration: underline;
+        }
+
+        /* Message Box */
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-size: 0.9rem;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        /* =========================================
+           SPECIFIC LAYOUT: LOGIN
+           ========================================= */
+        #login-card {
+            max-width: 400px;
+            /* Default vertical layout */
+        }
+
+        /* =========================================
+           SPECIFIC LAYOUT: SIGNUP
+           ========================================= */
+        #signup-card {
+            max-width: 400px; /* Default mobile width */
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+        }
+        .form-row .input-group {
+            flex: 1;
+            margin-bottom: 0; /* Reset for row context */
+        }
+        /* Restore margin bottom for the row wrapper itself */
+        .form-row-wrapper {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        /* =========================================
+           RESPONSIVE LOGIC
+           ========================================= */
+
+        /* --- DESKTOP (Wide 16:10 Ratio) --- */
+        @media (min-width: 1024px) {
+            
+            /* Login gets slightly wider but stays centered */
+            #login-card {
+                max-width: 450px;
+                padding: 50px;
+            }
+
+            /* Signup becomes the wide 16:10 card */
+            #signup-card {
+                max-width: 900px;
+                aspect-ratio: 16/10;
+                min-height: fit-content;
+                padding: 50px;
+                display: grid;
+                grid-template-columns: 1.2fr 1fr; /* Left inputs, Right text area */
+                grid-template-rows: auto auto 1fr auto; /* Header, Icon, Content, Footer */
+                gap: 0 30px;
+                text-align: left;
+                align-items: start;
+            }
+
+            /* Reset flex direction for grid placement */
+            #signup-card {
+                display: grid; 
+            }
+
+            /* Header Area (Icon + Title) - Span Left Column */
+            #signup-card .header-section {
+                grid-column: 1;
+                grid-row: 1;
+                text-align: left;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                margin-bottom: 30px;
+            }
+            #signup-card .profile-icon {
+                margin: 0; /* remove auto margins */
+                width: 60px;
+                height: 60px;
+            }
+            #signup-card .title {
+                margin: 0;
+            }
+
+            /* Left Column: Form Inputs */
+            #signup-card .signup-left-col {
+                grid-column: 1;
+                grid-row: 2 / span 3;
+            }
+
+            /* Right Column: Additional Info + Button */
+            #signup-card .signup-right-col {
+                grid-column: 2;
+                grid-row: 1 / span 4;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                padding-top: 10px; /* Align with inputs */
+            }
+
+            #signup-card textarea {
+                flex-grow: 1; /* Fill vertical space */
+                min-height: 200px;
+            }
+            
+            /* Footer Links */
+            #signup-card .links {
+                grid-column: 1 / -1;
+                margin-top: 20px;
+                justify-content: flex-start;
+            }
+        }
+
+        /* --- MOBILE (Portrait) --- */
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+                background-color: #E3DACC;
+                align-items: flex-start;
+            }
+
+            .auth-card {
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+                max-width: 100%;
+                min-height: 100vh;
+                padding: 30px 20px;
+                animation: none; /* remove slide for simpler feel */
+            }
+
+            /* Stack rows on mobile */
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .form-row .input-group {
+                margin-bottom: 15px;
+            }
+            .form-row-wrapper {
+                margin-bottom: 0;
+            }
+
+            /* Hide icon on short screens or just to save space */
+            .profile-icon {
+                margin-top: 10px;
+            }
+
+            /* Reset Grid for Signup on Mobile */
+            #signup-card {
+                display: flex;
+                aspect-ratio: auto;
+            }
+            #signup-card .header-section {
+                flex-direction: column;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+        }
+
+/* =========================================
+   HOME PAGE RECOMMENDATIONS
+   ========================================= */
+.recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.card {
+    background-color: #F0EEE6;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #ddd;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.card-title {
+    color: #4A443E;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.card-description {
+    color: #6B6158;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.card-link {
+    color: #4A443E;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.card-link:hover {
+    color: #000;
+    text-decoration: underline;
+}

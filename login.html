@@ -1,0 +1,73 @@
+<!--This project is created by Odoo-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="https://icons.veryicon.com/png/o/internet--web/billion-square-cloud/o-1.png" type="image/x-icon">
+    <title>Login</title>
+    <!-- Importing a nice font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="message-box" id="messageBox"></div>
+
+    <!-- =========================================
+         CODE BLOCK 1: LOGIN CARD
+         ========================================= -->
+    <div id="login-card" class="auth-card">
+        
+        <!-- Icon -->
+        <div class="profile-icon">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+        </div>
+
+        <h2 class="title">Welcome Back</h2>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter username" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter password" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Login</button>
+            
+            <div class="links" style="justify-content: space-between;">
+                <a href="forgot_password.html" target="_blank">Forgot Password?</a>
+                <a href="signup.html" target="_blank">Create Account</a>
+            </div>
+        </form>
+    </div>
+
+
+    <script>
+        // --- FORM HANDLERS ---
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const u = document.getElementById('username').value;
+            if (u) {
+                showMessage(`Welcome back, ${u}! Redirecting...`);
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 1500);
+            }
+        });
+
+        function showMessage(msg) {
+            const box = document.getElementById('messageBox');
+            box.innerText = msg;
+            box.style.display = 'block';
+            setTimeout(() => box.style.display = 'none', 3000);
+        }
+    </script>
+</body>
+</html>

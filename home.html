@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* =========================================
+           RESET & GLOBAL VARIABLES
+           ========================================= */
+        :root {
+            --bg-color: #F0EEE6;       
+            --card-bg: #FFFFFF;        
+            --section-bg: #E3DACC;     
+            --accent-color: #D97757;   
+            --text-dark: #2D2A26;
+            --text-light: #8C8279;
+            --rating-star: #FFB400;
+            --shadow-sm: 0 5px 20px rgba(0,0,0,0.03);
+            --shadow-md: 0 10px 25px rgba(0,0,0,0.05);
+            --shadow-lg: 0 20px 40px rgba(217, 119, 87, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 80px; 
+        }
+
+        /* Container for centering content on large screens */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        /* =========================================
+           HEADER SECTION
+           ========================================= */
+        .header {
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-color);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .user-greeting {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-greeting h1 {
+            font-size: 1.6rem;
+            line-height: 1.2;
+        }
+
+        .user-greeting span {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Desktop Nav Links */
+        .desktop-nav {
+            display: none;
+            gap: 30px;
+        }
+
+        .desktop-nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .desktop-nav a:hover, .desktop-nav a.active {
+            color: var(--accent-color);
+        }
+
+        .profile-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--section-bg);
+            border: 2px solid #fff;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        
+        .profile-btn svg {
+            width: 30px;
+            height: 30px;
+            color: var(--accent-color);
+            fill: currentColor;
+        }
+
+        /* =========================================
+           HERO BANNER (Highest Visited Spot)
+           ========================================= */
+        .hero-banner-section {
+            padding: 0 25px 25px 25px;
+        }
+
+        .hero-banner {
+            width: 100%;
+            height: 320px;
+            border-radius: 30px;
+            /* Using a complex gradient to simulate a rich image background */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.6)), 
+                        linear-gradient(135deg, #FF9A9E 0%, #FECFEF 99%, #D97757 100%);
+            background-size: cover;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 30px;
+            color: white;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        /* Simulating Image Texture/Pattern */
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.2) 0%, transparent 10%),
+                radial-gradient(circle at 80% 40%, rgba(255,255,255,0.1) 0%, transparent 20%);
+            z-index: 1;
+        }
+        
+        /* Fallback visual if no image: Stylized Mountain SVG via background */
+        .hero-banner-visual {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #D97757; /* Fallback */
+            background: linear-gradient(160deg, #D97757 0%, #8C8279 100%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .hero-tag {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255,255,255,0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            line-height: 1.1;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-cta {
+            background-color: #fff;
+            color: var(--accent-color);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        /* =========================================
+           MAIN CONTENT
+           ========================================= */
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Search Bar */
+        .search-section {
+            padding: 0 25px;
+        }
+
+        .search-box {
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid transparent;
+            transition: border-color 0.2s;
+            max-width: 600px;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--accent-color);
+        }
+
+        .search-icon {
+            color: var(--accent-color);
+            flex-shrink: 0;
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            width: 100%;
+            color: var(--text-dark);
+        }
+
+        /* Smart Planner */
+        .smart-planner-section {
+            padding: 0 25px;
+        }
+
+        .smart-input-box {
+            background-color: var(--section-bg);
+            padding: 20px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 800px;
+        }
+
+        .smart-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .planner-input {
+            flex: 1;
+            background: rgba(255,255,255,0.6);
+            border: none;
+            padding: 12px 15px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .planner-btn {
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            width: 45px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .planner-btn:hover {
+            background-color: #c46243;
+            transform: scale(1.05);
+        }
+
+        /* Categories */
+        .categories-section {
+            padding: 0 0 0 25px;
+        }
+
+        .categories-wrapper {
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding-bottom: 10px;
+        }
+        
+        .categories-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .categories-list {
+            display: flex;
+            gap: 20px;
+            padding-right: 25px;
+        }
+
+        .category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            min-width: 60px;
+        }
+
+        .cat-icon-box {
+            width: 60px;
+            height: 60px;
+            background-color: #fff;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: var(--shadow-sm);
+            color: var(--text-light);
+        }
+
+        .category-item:hover .cat-icon-box {
+            transform: translateY(-2px);
+        }
+
+        .category-item.active .cat-icon-box {
+            background-color: var(--accent-color);
+            color: #fff;
+            box-shadow: 0 8px 15px rgba(217, 119, 87, 0.3);
+        }
+
+        .cat-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .category-item.active .cat-label {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* Sections */
+        .content-section {
+            padding: 0 25px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .see-all {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .places-container {
+            display: flex;
+            gap: 20px;
+            padding-bottom: 20px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            margin-right: -25px;
+            padding-right: 25px;
+        }
+
+        .places-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .place-card {
+            min-width: 260px;
+            background-color: #fff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .place-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .place-image-area {
+            height: 160px;
+            background-color: #ddd;
+            position: relative;
+            background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), 
+                              linear-gradient(-45deg, #ccc 25%, transparent 25%), 
+                              linear-gradient(45deg, transparent 75%, #ccc 75%), 
+                              linear-gradient(-45deg, transparent 75%, #ccc 75%);
+            background-size: 20px 20px;
+        }
+
+        .price-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(255,255,255,0.95);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .like-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 32px;
+            height: 32px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .like-btn:hover {
+            background: rgba(217, 119, 87, 0.8);
+        }
+
+        .place-details {
+            padding: 15px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .place-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .place-location {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .rating-row {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: auto;
+        }
+
+        .star { color: var(--rating-star); font-size: 0.9rem; }
+        .rating-num { font-weight: 600; font-size: 0.9rem; }
+        .review-count { color: var(--text-light); font-size: 0.8rem; }
+
+        .recommended-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .rec-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s;
+        }
+
+        .rec-card:hover {
+            transform: translateX(5px);
+        }
+
+        .rec-img {
+            width: 70px;
+            height: 70px;
+            background: #ddd;
+            border-radius: 15px;
+            flex-shrink: 0;
+        }
+
+        .rec-info h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .rec-info span {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .rec-price {
+            margin-left: auto;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 10px;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            color: #C0B8B0;
+            text-decoration: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .nav-item.active {
+            color: var(--accent-color);
+        }
+        
+        .nav-item.active::after {
+            content: '';
+            width: 5px;
+            height: 5px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        /* =========================================
+           RESPONSIVE MEDIA QUERIES
+           ========================================= */
+        @media (min-width: 768px) {
+            body { padding-bottom: 0; }
+            .bottom-nav { display: none; }
+            .desktop-nav { display: flex; }
+            .search-box { margin: 0; width: 400px; }
+            .places-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                overflow-x: visible;
+                margin-right: 0;
+                padding-right: 0;
+            }
+            .place-card { min-width: 0; }
+            .recommended-list {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .input-row { max-width: 600px; }
+            .hero-banner { height: 400px; } /* Taller banner on large screens */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header class="header">
+            <div class="user-greeting">
+                <span>Welcome back,</span>
+                <h1>Traveler!</h1>
+            </div>
+
+            <nav class="desktop-nav">
+                <a href="#" class="active">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                    Home
+                </a>
+                <a href="#">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    Likes
+                </a>
+                <a href="#">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    Schedule
+                </a>
+            </nav>
+
+            <a href="login.html" class="profile-btn" aria-label="Profile">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </a>
+        </header>
+
+        <main>
+            <!-- Hero Banner: Highest Visited Spot -->
+            <section class="hero-banner-section">
+                <div class="hero-banner">
+                    <!-- Visual Background -->
+                    <div class="hero-banner-visual"></div>
+                    
+                    <div class="hero-content">
+                        <div class="hero-tag">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"/></svg>
+                            Season's Top Pick
+                        </div>
+                        <h2 class="hero-title">Kyoto in Autumn</h2>
+                        <div class="hero-subtitle">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Kyoto, Japan • <span style="color: #FFB400;">★ 4.9</span>
+                        </div>
+                        <button class="hero-cta">View Details</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Search -->
+            <section class="search-section">
+                <div class="search-box">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" class="search-input" placeholder="Discover your next trip...">
+                </div>
+            </section>
+
+            <!-- Smart Planner -->
+            <section class="smart-planner-section">
+                <div class="smart-input-box">
+                    <label for="smartInput" class="smart-label">Quick Plan Itinerary</label>
+                    <div class="input-row">
+                        <input type="text" class="planner-input" id="smartInput" placeholder="e.g. 'Visit Museum 10am'">
+                        <button class="planner-btn" id="addPlanBtn" aria-label="Add Plan">+</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories -->
+            <section class="categories-section">
+                <div class="categories-wrapper">
+                    <div class="categories-list">
+                        <div class="category-item active">
+                            <div class="cat-icon-box">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            </div>
+                            <span class="cat-label">All</span>
+                        </div>
+                        <div class="category-item">
+                            <div class="cat-icon-box">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4 8 4v14M5 10a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M13 10a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2"/></svg>
+                            </div>
+                            <span class="cat-label">Hotels</span>
+                        </div>
+                        <div class="category-item">
+                            <div class="cat-icon-box">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            </div>
+                            <span class="cat-label">Flights</span>
+                        </div>
+                        <div class="category-item">
+                            <div class="cat-icon-box">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+                            </div>
+                            <span class="cat-label">Food</span>
+                        </div>
+                        <div class="category-item">
+                            <div class="cat-icon-box">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                            </div>
+                            <span class="cat-label">Events</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Top Regional Places -->
+            <section class="content-section">
+                <div class="section-header">
+                    <h2>Top Regional Places</h2>
+                    <a href="#" class="see-all">See All</a>
+                </div>
+
+                <div class="places-container" id="regional-places-container">
+                    <!-- Loading message -->
+                    <p>Loading regional places based on your location...</p>
+                </div>
+            </section>
+
+            <!-- Popular Places -->
+            <section class="content-section">
+                <div class="section-header">
+                    <h2>Popular</h2>
+                    <a href="#" class="see-all">See All</a>
+                </div>
+
+                <div class="places-container">
+                    <!-- Card 1 -->
+                    <div class="place-card">
+                        <div class="place-image-area">
+                            <div class="price-badge">$120</div>
+                            <button class="like-btn" aria-label="Like">♥</button>
+                            <svg style="position: absolute; bottom: 10px; left: 20px; opacity: 0.3;" width="50" height="50" viewBox="0 0 24 24" fill="currentColor"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"/></svg>
+                        </div>
+                        <div class="place-details">
+                            <h3 class="place-title">Mount Fuji</h3>
+                            <div class="place-location">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                Tokyo, Japan
+                            </div>
+                            <div class="rating-row">
+                                <span class="star">★</span>
+                                <span class="rating-num">4.8</span>
+                                <span class="review-count">(120 reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="place-card">
+                        <div class="place-image-area">
+                            <div class="price-badge">$90</div>
+                            <button class="like-btn" aria-label="Like">♥</button>
+                            <svg style="position: absolute; bottom: 10px; left: 20px; opacity: 0.3;" width="50" height="50" viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h20V2L2 22zm18-2H4V4.9L19.1 20z"/></svg>
+                        </div>
+                        <div class="place-details">
+                            <h3 class="place-title">Eiffel Tower</h3>
+                            <div class="place-location">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                Paris, France
+                            </div>
+                            <div class="rating-row">
+                                <span class="star">★</span>
+                                <span class="rating-num">4.9</span>
+                                <span class="review-count">(2.1k reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="place-card">
+                        <div class="place-image-area">
+                            <div class="price-badge">$200</div>
+                            <button class="like-btn" aria-label="Like">♥</button>
+                            <svg style="position: absolute; bottom: 10px; left: 20px; opacity: 0.3;" width="50" height="50" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                        </div>
+                        <div class="place-details">
+                            <h3 class="place-title">Blue Lagoon</h3>
+                            <div class="place-location">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                Iceland
+                            </div>
+                            <div class="rating-row">
+                                <span class="star">★</span>
+                                <span class="rating-num">4.7</span>
+                                <span class="review-count">(850 reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 4 -->
+                    <div class="place-card">
+                        <div class="place-image-area">
+                            <div class="price-badge">$350</div>
+                            <button class="like-btn" aria-label="Like">♥</button>
+                        </div>
+                        <div class="place-details">
+                            <h3 class="place-title">Maldives</h3>
+                            <div class="place-location">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                South Asia
+                            </div>
+                            <div class="rating-row">
+                                <span class="star">★</span>
+                                <span class="rating-num">5.0</span>
+                                <span class="review-count">(300 reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommended -->
+            <section class="content-section">
+                <div class="section-header">
+                    <h2>Recommended</h2>
+                    <a href="#" class="see-all">See All</a>
+                </div>
+                
+                <div class="recommended-list" id="recommended-places-container">
+                    <p>Loading popular places near you...</p>
+                </div>
+            </section>
+        </main>
+    </div> <!-- End Container -->
+
+    <!-- Mobile Bottom Nav -->
+    <nav class="bottom-nav">
+        <a class="nav-item active" href="#">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        </a>
+        <a class="nav-item" href="#">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        </a>
+        <a class="nav-item" href="#">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        </a>
+        <a class="nav-item" href="login.html"> 
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
+    </nav>
+
+    <script>
+        const btn = document.getElementById('addPlanBtn');
+        const input = document.getElementById('smartInput');
+        
+        btn.addEventListener('click', () => {
+            const val = input.value;
+            if(val) {
+                alert(`Added to Itinerary: ${val}`);
+                input.value = '';
+            }
+        });
+
+        // Category Switching Logic
+        const cats = document.querySelectorAll('.category-item');
+        cats.forEach(cat => {
+            cat.addEventListener('click', () => {
+                cats.forEach(c => c.classList.remove('active'));
+                cat.classList.add('active');
+            });
+        });
+
+        // Script for location-based places
+        window.addEventListener('load', () => {
+            loadLocationBasedContent();
+        });
+
+        function loadLocationBasedContent() {
+            const regionalContainer = document.getElementById('regional-places-container');
+            const recommendedContainer = document.getElementById('recommended-places-container');
+
+            if (!navigator.geolocation) {
+                if(regionalContainer) regionalContainer.innerHTML = '<p>Geolocation is not supported by your browser.</p>';
+                if(recommendedContainer) recommendedContainer.innerHTML = '<p>Geolocation is not supported by your browser.</p>';
+                return;
+            }
+
+            function success(position) {
+                const latitude  = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                // For Top Regional Places
+                if (regionalContainer) {
+                    const regionalPlaces = fetchMockPlaces(latitude, longitude);
+                    renderPlaces(regionalPlaces, regionalContainer);
+                }
+
+                // For Recommended Places
+                if (recommendedContainer) {
+                    const popularPlaces = fetchPopularOnlinePlaces(latitude, longitude);
+                    renderRecommendedPlaces(popularPlaces, recommendedContainer);
+                }
+            }
+
+            function error() {
+                if(regionalContainer) regionalContainer.innerHTML = '<p>Unable to retrieve your location. Please enable location services.</p>';
+                if(recommendedContainer) recommendedContainer.innerHTML = '<p>Unable to retrieve your location to show popular places.</p>';
+            }
+
+            if(regionalContainer) regionalContainer.innerHTML = '<p>Loading regional places based on your location...</p>';
+            if(recommendedContainer) recommendedContainer.innerHTML = '<p>Loading popular places near you...</p>';
+            navigator.geolocation.getCurrentPosition(success, error);
+        }
+
+        function fetchMockPlaces(lat, lon) {
+            // Mock data - in a real scenario, this would be a real API call
+            // using lat and lon to get nearby places.
+            console.log(`Fetching places near ${lat}, ${lon}`);
+            return [
+                {
+                    name: "Local Park",
+                    location: "Nearby",
+                    rating: 4.5,
+                    reviews: 78,
+                    price: "Free",
+                    imageUrl: `https://source.unsplash.com/400x300/?park,nature`
+                },
+                {
+                    name: "City Museum",
+                    location: "Downtown",
+                    rating: 4.8,
+                    reviews: 250,
+                    price: "$15",
+                    imageUrl: `https://source.unsplash.com/400x300/?museum,city`
+                },
+                {
+                    name: "Beachside Cafe",
+                    location: "Coastal Area",
+                    rating: 4.6,
+                    reviews: 120,
+                    price: "$20-40",
+                    imageUrl: `https://source.unsplash.com/400x300/?cafe,beach`
+                },
+                {
+                    name: "Mountain Trail",
+                    location: "Hillside",
+                    rating: 4.9,
+                    reviews: 300,
+                    price: "Free",
+                    imageUrl: `https://source.unsplash.com/400x300/?mountain,hiking`
+                }
+            ];
+        }
+
+        function renderPlaces(places, container) {
+            if (places.length === 0) {
+                container.innerHTML = '<p>No regional places found.</p>';
+                return;
+            }
+
+            container.innerHTML = ''; // Clear loading message
+
+            places.forEach(place => {
+                const placeCard = `
+                    <div class="place-card">
+                        <div class="place-image-area" style="background-image: url('${place.imageUrl}'); background-size: cover; background-position: center;">
+                            <div class="price-badge">${place.price}</div>
+                            <button class="like-btn" aria-label="Like">♥</button>
+                        </div>
+                        <div class="place-details">
+                            <h3 class="place-title">${place.name}</h3>
+                            <div class="place-location">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                ${place.location}
+                            </div>
+                            <div class="rating-row">
+                                <span class="star">★</span>
+                                <span class="rating-num">${place.rating}</span>
+                                <span class="review-count">(${place.reviews} reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += placeCard;
+            });
+        }
+
+        function fetchPopularOnlinePlaces(lat, lon) {
+            console.log(`Fetching popular online places near ${lat}, ${lon}`);
+            return [
+                {
+                    name: "Famous Restaurant",
+                    description: "3-Star Michelin",
+                    price: "$$$",
+                    imageUrl: "https://source.unsplash.com/400x300/?restaurant,food"
+                },
+                {
+                    name: "Hidden Gem Library",
+                    description: "Rare Books Collection",
+                    price: "Free",
+                    imageUrl: "https://source.unsplash.com/400x300/?library,books"
+                },
+                {
+                    name: "Rooftop Bar",
+                    description: "Panoramic City Views",
+                    price: "$$",
+                    imageUrl: "https://source.unsplash.com/400x300/?rooftop,bar"
+                }
+            ];
+        }
+
+        function renderRecommendedPlaces(places, container) {
+            if (places.length === 0) {
+                container.innerHTML = '<p>No popular places found nearby.</p>';
+                return;
+            }
+
+            container.innerHTML = ''; // Clear loading message
+
+            places.forEach(place => {
+                const recCard = `
+                    <div class="rec-card">
+                        <div class="rec-img" style="background-image: url('${place.imageUrl}'); background-size: cover; background-position: center;"></div>
+                        <div class="rec-info">
+                            <h4>${place.name}</h4>
+                            <span>${place.description}</span>
+                        </div>
+                        <div class="rec-price">${place.price}</div>
+                    </div>
+                `;
+                container.innerHTML += recCard;
+            });
+        }
+    </script>
+</body>
+</html>
