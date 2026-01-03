@@ -1,111 +1,291 @@
-<!--This project is created by Odoo-->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="icon" href="https://icons.veryicon.com/png/o/internet--web/billion-square-cloud/o-1.png" type="image/x-icon">
-    <title>Sign Up</title>
-    <!-- Importing a nice font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Explorer - Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* =========================================
+           RESET & GLOBAL VARIABLES
+           ========================================= */
+        :root {
+            --bg-color: #F0EEE6;
+            --card-bg: #FFFFFF;
+            --section-bg: #E3DACC;
+            --accent-color: #D97757;
+            --text-dark: #2D2A26;
+            --text-light: #8C8279;
+            --shadow-sm: 0 5px 20px rgba(0, 0, 0, 0.03);
+            --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 40px rgba(217, 119, 87, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative background elements */
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: #FF9A9E;
+            top: -50px;
+            right: -50px;
+            filter: blur(60px);
+        }
+
+        .shape-2 {
+            width: 400px;
+            height: 400px;
+            background: #FECFEF;
+            bottom: -100px;
+            left: -100px;
+            filter: blur(80px);
+        }
+
+        /* Signup Container */
+        .signup-container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 450px;
+            /* Slightly wider for more fields if needed */
+            padding: 40px 30px;
+            border-radius: 30px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            font-weight: 500;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .back-link:hover {
+            color: var(--accent-color);
+        }
+
+        .form-header {
+            margin-bottom: 30px;
+        }
+
+        .form-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .form-header p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Form Styling */
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-left: 5px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 15px;
+            border: 2px solid transparent;
+            background-color: var(--bg-color);
+            font-size: 1rem;
+            color: var(--text-dark);
+            transition: all 0.2s;
+            outline: none;
+        }
+
+        .input-field:focus {
+            background-color: #fff;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(217, 119, 87, 0.1);
+        }
+
+        .submit-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 15px rgba(217, 119, 87, 0.3);
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(217, 119, 87, 0.4);
+            background-color: #c46243;
+        }
+
+        /* Toggle Section */
+        .toggle-box {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .toggle-link {
+            color: var(--accent-color);
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+
+        @media (max-width: 480px) {
+            .signup-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-    <div class="message-box" id="messageBox"></div>
+    <!-- Decorative Shapes -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
 
-    <!-- =========================================
-         CODE BLOCK 2: SIGNUP CARD
-         ========================================= -->
-    <div id="signup-card" class="auth-card">
-        
-        <!-- Header Section (Grouped for Desktop Layout) -->
-        <div class="header-section">
-            <div class="profile-icon">
-                <svg viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-            </div>
-            <h2 class="title">Create Account</h2>
+    <div class="signup-container">
+        <!-- Back Link safely handles navigation -->
+        <span onclick="navigateTo('index.html')" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Back to Travel
+        </span>
+
+        <div class="form-header">
+            <h1>Create Account</h1>
+            <p>Start your journey with us today.</p>
         </div>
 
-        <form id="signupForm" style="display: contents;"> <!-- Display contents allows children to participate in parent grid -->
-            
-            <!-- LEFT COLUMN (Inputs) -->
-            <div class="signup-left-col">
-                <div class="form-row-wrapper">
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>First Name</label>
-                            <input type="text" placeholder="First Name" required>
-                        </div>
-                        <div class="input-group">
-                            <label>Last Name</label>
-                            <input type="text" placeholder="Last Name" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row-wrapper">
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>Email</label>
-                            <input type="email" placeholder="Email Address" required>
-                        </div>
-                        <div class="input-group">
-                            <label>Phone</label>
-                            <input type="tel" placeholder="Phone Number">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row-wrapper">
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>City</label>
-                            <input type="text" placeholder="City">
-                        </div>
-                        <div class="input-group">
-                            <label>Country</label>
-                            <input type="text" placeholder="Country">
-                        </div>
-                    </div>
-                </div>
+        <form class="auth-form" onsubmit="handleSignup(event)">
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" class="input-field" placeholder="John Doe" required>
             </div>
 
-            <!-- RIGHT COLUMN (Big Textarea & Button) -->
-            <div class="signup-right-col">
-                <div class="input-group" style="display: flex; flex-direction: column; flex-grow: 1;">
-                    <label>Additional Info</label>
-                    <textarea placeholder="Tell us about yourself..." style="height: 100%;"></textarea>
-                </div>
-                
-                <button type="submit" class="btn-primary">Register</button>
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" class="input-field" placeholder="user@example.com" required>
             </div>
 
-            <!-- FOOTER -->
-            <div class="links">
-                <span style="color: #6B6158;">Already have an account?</span>
-                <a href="login.html" target="_blank"><b>Back to Login</b></a>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" class="input-field" placeholder="Create a password" required>
             </div>
 
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input type="password" class="input-field" placeholder="Confirm your password" required>
+            </div>
+
+            <button type="submit" class="submit-btn">Sign Up</button>
         </form>
+
+        <div class="toggle-box">
+            Already have an account?
+            <span class="toggle-link" onclick="navigateTo('login.html')">Sign in</span>
+        </div>
     </div>
 
     <script>
-        // --- FORM HANDLERS ---
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            showMessage("Account created successfully!");
-            setTimeout(() => {
-                window.location.href = "login.html";
-            }, 1500);
-        });
+        // Helper function for navigation to handle preview environment constraints
+        function navigateTo(page) {
+            try {
+                window.location.href = page;
+            } catch (e) {
+                console.warn('Navigation blocked in this environment:', e);
+                // In a real environment, this error won't happen. 
+                // In preview, we alert the user.
+                if (page === 'login.html') {
+                    alert('Redirecting to Login Page...');
+                } else if (page === 'index.html') {
+                    alert('Redirecting to Home Page...');
+                }
+            }
+        }
 
-        function showMessage(msg) {
-            const box = document.getElementById('messageBox');
-            box.innerText = msg;
-            box.style.display = 'block';
-            setTimeout(() => box.style.display = 'none', 3000);
+        function handleSignup(e) {
+            e.preventDefault();
+
+            const btn = e.target.querySelector('.submit-btn');
+            const originalText = btn.innerText;
+
+            // Visual feedback
+            btn.innerText = 'Creating Account...';
+            btn.style.opacity = '0.8';
+
+            setTimeout(() => {
+                alert("Account created successfully! Please sign in.");
+                // Redirect to login page after successful signup
+                navigateTo('login.html');
+
+                // Reset button
+                btn.innerText = originalText;
+                btn.style.opacity = '1';
+            }, 1000);
         }
     </script>
 </body>
+
 </html>
